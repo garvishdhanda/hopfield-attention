@@ -23,3 +23,13 @@ I stored random +1/-1 patterns, corrupted 25% of one stored pattern, and checked
 - capacity_experiment.py, capacity_experiment2.py, capacity_plot.py: capacity vs N, beta, d, with theory comparison
 - attention_vs_hopfield.py: attention and Hopfield step shown numerically identical
 - vs_pytorch_attention.py: verified against PyTorch's real attention implementation
+
+## Iterative retrieval
+Same setup as above (d = 32, 8 of 32 bits flipped, 200 trials per point), but repeating the update several times and feeding each output back in as the next query.
+
+![iterative plot](capacity1_plot.png)
+
+- Extra steps help the hard cases: at N = 500, beta = 0.5, success goes from 0.0 (1 step) to about 0.27 (5 steps).
+- Most of the gain comes from the second step, and results flatten after about 3 steps.
+- Low beta needs more steps, because each update sharpens the weights only a little. beta = 0.01 stays at 0 because the weights are almost uniform.
+- It plateaus because iteration cannot fix cases where another stored pattern is a closer match to the corrupted query. It then converges to that wrong pattern.
