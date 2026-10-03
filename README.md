@@ -1,5 +1,20 @@
 # Hopfield retrieval and attention
 
+Transformer attention is mathematically the same operation as the retrieval step of a modern Hopfield network. This project shows that numerically and measures how many patterns such a memory can hold.
+
+**Main findings**
+- The attention step and the Hopfield update give numerically identical results, and my implementation matches PyTorch's attention.
+- Recovery depends on pattern length d, number of stored patterns N, and beta (inverse temperature). Low beta blurs everything into an average, and high beta picks the best match.
+- Repeating the update helps hard cases, with most of the gain in the second step, and then plateaus.
+- Correlated patterns hurt capacity sharply, and extra steps help much less.
+- On real handwritten digits (10 stored, 64 pixels), recovery stays above 98% up to about 19% corrupted pixels.
+
+**To run**
+```
+pip install torch numpy matplotlib scikit-learn
+python hopfield_retrieval.py
+```
+
 Small experiments on the link between Modern Hopfield Networks and Transformer attention.
 
 ## Key idea
