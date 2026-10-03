@@ -33,3 +33,16 @@ Same setup as above (d = 32, 8 of 32 bits flipped, 200 trials per point), but re
 - Most of the gain comes from the second step, and results flatten after about 3 steps.
 - Low beta needs more steps, because each update sharpens the weights only a little. beta = 0.01 stays at 0 because the weights are almost uniform.
 - It plateaus because iteration cannot fix cases where another stored pattern is a closer match to the corrupted query. It then converges to that wrong pattern.
+
+## Correlated patterns
+Patterns are noisy copies of one shared base pattern, each bit flipped with probability p (p = 0.5 is the random case; smaller p means more alike). d = 32, beta = 1, 8 bits corrupted, 200 trials.
+
+| N | steps | p = 0.5 | p = 0.4 | p = 0.3 | p = 0.2 |
+|---|---|---|---|---|---|
+| 20 | 1 | 0.935 | 0.915 | 0.85 | 0.635 |
+| 20 | 3 | 0.96 | 0.955 | 0.85 | 0.695 |
+| 100 | 1 | 0.73 | 0.635 | 0.485 | 0.29 |
+| 100 | 3 | 0.805 | 0.695 | 0.565 | 0.315 |
+
+- Capacity drops quickly as patterns become more similar: at N = 100, success falls from 0.73 to 0.29 as p goes from 0.5 to 0.2.
+- Extra update steps help much less with correlated patterns, because many stored patterns score almost as well as the target.
