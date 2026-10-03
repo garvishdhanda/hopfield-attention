@@ -46,3 +46,19 @@ Patterns are noisy copies of one shared base pattern, each bit flipped with prob
 
 - Capacity drops quickly as patterns become more similar: at N = 100, success falls from 0.73 to 0.29 as p goes from 0.5 to 0.2.
 - Extra update steps help much less with correlated patterns, because many stored patterns score almost as well as the target.
+
+## Real data: handwritten digits
+Stored one 8x8 example of each digit 0-9 (from scikit-learn's digits dataset), binarized to ±1 pixels (64 per image). Corrupted pixels at random, then restored with 3 update steps (beta = 1, 100 trials per digit).
+
+![digits demo](digits_demo.png)
+
+| Corrupted pixels (of 64) | Exact recovery |
+|---|---|
+| 4 | 1.0 |
+| 8 | 0.998 |
+| 12 | 0.981 |
+| 16 | 0.925 |
+| 20 | 0.739 |
+
+- With 10 stored digits, recovery stays above 0.98 up to 12 corrupted pixels (about 19% of the image).
+- Success drops gradually after that, as the corrupted image becomes closer to a different stored digit.
